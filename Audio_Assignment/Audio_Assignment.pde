@@ -30,6 +30,7 @@ boolean dead; //Whether the player is dead
 Player player1;
 
 ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>(); //Starts the obstacles array list
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();  //Starts the bullet array list
 
 void setup()
 {
@@ -90,11 +91,18 @@ void draw()
     a.render(sample); //Draw the obstacles, using the sample variable to adjust size
     
   }
+  //Call Bullets
+  for(int i = 0; i < bullets.size(); i++)
+  {
+    Bullet b = bullets.get(i);
+    b.render();
+    b.move();
+  }
 }
 
 void keyPressed()
 {
-  if (keyCode == ' ') //Used for pausing/playing
+  if (keyCode == 'P') //Used for pausing/playing
   {
     if (player.isPlaying()) //if you press the key and it is playing, pause
     {

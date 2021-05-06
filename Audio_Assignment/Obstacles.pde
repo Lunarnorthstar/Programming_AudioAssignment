@@ -19,7 +19,7 @@ class Obstacles
   {
     noFill();
     stroke(map(itemSize, 0, 100, 0, 255), 255, 255); //Sets the color based on the size of the obstacle
-    itemSize = lerp(itemSize, itemSize + sizeVar, 0.2); //Lerps the obstacle size for a smoother effect
+    itemSize = lerp(itemSize, itemSize + sizeVar, 0.9); //Lerps the obstacle size for a smoother effect
     
     circle(itemX, itemY, itemSize); //Draw
   }

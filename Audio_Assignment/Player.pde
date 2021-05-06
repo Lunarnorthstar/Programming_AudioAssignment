@@ -1,6 +1,6 @@
 class Player
 {
-  
+   float health = 10;
    float playerX;
    float playerY;
    float playerSize;
@@ -17,11 +17,17 @@ class Player
   void render()
   {
     fill(255);
+    stroke(255);
     triangle(playerX, playerY + playerSize, playerX, playerY - playerSize, playerX + playerSize, playerY); //Draw the player
   }
   void update()
   {
-    if (keyPressed) //Player controls
+   move();
+   shoot();
+  }
+  void move()
+  {
+     if (keyPressed) //Player controls
   {
     if (keyCode == UP && playerY > playerSize)
     {
@@ -39,6 +45,28 @@ class Player
     {
       playerX -= playerSpeed;
     }
+  }
+  }
+  
+  //Shoot Variables
+  int fireRate = 5;
+  float timePass;
+  float toPass = 1/ (float) fireRate;
+  
+  void shoot()
+  {
+     if (keyPressed) //Shoot controls
+  {
+    if(key == ' ' && timePass >= toPass)
+    {
+      float x, y;
+      x = playerX + playerSize;
+      y = playerY;
+      Bullet b = new Bullet(x, y);
+      bullets.add(b);
+      timePass = 0;
+    }
+    timePass += 1 / 60.0f;
   }
   }
 }
