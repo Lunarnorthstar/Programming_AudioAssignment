@@ -4,23 +4,24 @@ class Player
    float playerX;
    float playerY;
    float playerSize;
-   float playerSpeed;
+   float playerSpeed; //Player paramaters
   
   Player(float X, float Y, float size, float speed)
   {
     playerX = X;
     playerY = Y;
     playerSize = size;
-    playerSpeed = speed;
+    playerSpeed = speed; //Cast the player paramaters
   }
   
   void render()
   {
-    triangle(playerX, playerY + playerSize, playerX, playerY - playerSize, playerX + playerSize, playerY);
+    fill(255);
+    triangle(playerX, playerY + playerSize, playerX, playerY - playerSize, playerX + playerSize, playerY); //Draw the player
   }
   void update()
   {
-    if (keyPressed)
+    if (keyPressed) //Player controls
   {
     if (keyCode == UP && playerY > playerSize)
     {
