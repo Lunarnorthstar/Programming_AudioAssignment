@@ -14,12 +14,30 @@ AudioInput ai;
 //Variables
 float lerpedAverage = 0; //Lerps the average (smoother movement)
 float[] lerpedBuffer; //Lerped buffer (smoother visual)
+int health = 3;
+float timeSurvived;
+float playerSpeed = 3;
+float playerY, playerX;
+float playerSize = 20;
+int maxRock = 15;
+float[] rockSpeed = new float [maxRock];
+float[] rockSize = new float [maxRock];
+float[] rockX = new float [maxRock];
+float[] rockY = new float [maxRock];
+boolean start = false;
+boolean dead;
+
+//Player Setup
+Player player1;
 
 void setup()
 {
   //Basic Setup
-  size(800, 800);
+  size(1024, 512);
   colorMode(HSB);
+  playerY = height/2;
+  playerX = 100;
+  player1 = new Player(playerX, playerY, playerSize, playerSpeed);
   
   //Minim music Setup
   minim = new Minim(this);
@@ -30,42 +48,12 @@ void setup()
   lerpedBuffer = new float[buffer.size()];
 }
 
-//Variable for setting which input you've chosen
-int which = 0;
-
 void draw()
 {
   //Setup visuals (backround color, line width, etc.
   background(0);
   keyPressed();
   strokeWeight(1);
-
-  //Sets the input based on player input for interactivity
-  if (which == 0)
-  {
-    Mode0();
-  }
-
-  if (which == 1)
-  {
-    Mode1();
-  }
-  if (which ==2)
-  {
-    Mode2();
-  }
-  if (which == 3)
-  {
-    Mode3();
-  }
-  if (which ==4)
-  {
-    Mode4();
-  }
-  if (which ==5)
-  {
-    Mode5();
-  }
 
   //Smooths buffer
   float sum = 0; //sumvariable that resets
@@ -76,15 +64,14 @@ void draw()
 
   float average = sum / buffer.size(); //takes the average of the buffer
   lerpedAverage = lerp(lerpedAverage, average, 0.1f); //lerps the average
+  
+  //Call Player
+  player1.update();
+  player1.render();
 }
 
 void keyPressed()
 {
-  // Set the value of which based on which key was pressed
-  if (keyCode >= '0' && keyCode <= '5')
-  {
-    which = keyCode - '0';
-  }
   if (keyCode == ' ') //Used for pausing/playing
   {
     if (player.isPlaying()) //if you press the key and it is playing, pause
@@ -108,6 +95,7 @@ void Mode0()
     line(i, height / 2 - sample, i, height/2 + sample); //Draws the line based on the value of sample
   }
 }
+<<<<<<< Updated upstream
 
 void Mode1()
 {
@@ -137,3 +125,5 @@ void Mode5()
 
   
 }
+=======
+>>>>>>> Stashed changes
