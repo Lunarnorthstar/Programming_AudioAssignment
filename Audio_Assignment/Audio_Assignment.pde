@@ -24,6 +24,7 @@ float itemSizeVar = 4; //The amount that each obstacle can vary in size
 
 //Setup
 Player player1; //Make the player
+PImage img; //Initialize the background image
 
 ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>(); //Starts the obstacles array list
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();  //Starts the bullet array list
@@ -46,6 +47,9 @@ void setup()
   ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
   buffer = player.mix; //Get both channels of audio
   lerpedBuffer = new float[buffer.size()];
+  
+  //Misc Setup
+  img = loadImage("Audio_Background.png"); //Load the image
 }
 
 
@@ -62,7 +66,8 @@ boolean checkKey(int k)
 void draw()
 {
   //Setup visuals (backround color, line width, etc.
-  background(0);
+  image(img, 0, 0);
+  //background(0);
   strokeWeight(1);
   
   text("Score: ", 10, 20);
