@@ -3,7 +3,7 @@ import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
 import ddf.minim.signals.*;
 import ddf.minim.spi.*;
-import ddf.minim.ugens.*;
+import ddf.minim.ugens.*; //Imports
 
 //Minim Setup
 Minim minim;
@@ -11,23 +11,23 @@ AudioPlayer player;
 AudioBuffer buffer;
 AudioInput ai;
 
-//Variables
-float lerpedAverage = 0; //Lerps the average (smoother movement)
-float[] lerpedBuffer; //Lerped buffer (smoother visual)
+//Variables; -S- Denotes a "set" variable, don't change the value.
+float lerpedAverage = 0; //Lerps the average (smoother movement) -S-
+float[] lerpedBuffer; //Lerped buffer (smoother visual) -S-
 int health = 3; //Health of the player
-float timeSurvived; //Measures the time alive
+float timeSurvived; //Measures the time alive -S-
 float playerSpeed = 3; //Movement speed of the player
-float playerY, playerX; //Position of the player
+float playerY, playerX; //Position of the player -S-
 float playerSize = 20; //Size of the player
 
 int maxRock = 100; //Maximum amount of obstacles on screen at once
 float itemSizeVar = 5; //The amount that each obstacle can vary in size
 
 //boolean start = false;
-boolean dead; //Whether the player is dead
+boolean dead; //Whether the player is dead -S-
 
 //Setup
-Player player1;
+Player player1; //Make the player
 
 ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>(); //Starts the obstacles array list
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();  //Starts the bullet array list
@@ -41,14 +41,14 @@ void setup()
   colorMode(HSB); //Color mode
   playerY = height/2;
   playerX = 100; //Properly sets the player X and Y based on the adjusted screen size
-  player1 = new Player(playerX, playerY, playerSize, playerSpeed); //Creates the player
+  player1 = new Player(playerX, playerY, playerSize, playerSpeed); //Creates the player w/ paramaters
 
   //Minim music Setup
   minim = new Minim(this);
   player = minim.loadFile("One Step From Eden - Cloak and Revolver Shiso's Theme.mp3", width);
-  player.play();
+  player.play(); //Start playing
   ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-  buffer = player.left;
+  buffer = player.mix; //Get both channels of audio
   lerpedBuffer = new float[buffer.size()];
 }
 
@@ -67,18 +67,14 @@ void draw()
 {
   //Setup visuals (backround color, line width, etc.
   background(0);
-  //keyPressed();
-  //keyReleased();
   strokeWeight(1);
 
-  //Smooths buffer
   float sum = 0; //sumvariable that resets
   float sample = 0; //Sample variable that resets
   for (int i = 0; i < buffer.size(); i ++)
   {
-    stroke(map(i, 0, buffer.size(), 0, 255), 255, 255); //sets color
     lerpedBuffer[i] = lerp(lerpedBuffer[i], buffer.get(i), 0.1f); //lerp buffer (smooth image)
-    sample = lerpedBuffer[i] * itemSizeVar; //new variable taking the value from the buffer 
+    sample = lerpedBuffer[i] * itemSizeVar; //new variable taking the value from the buffer. This is used to adjust the size of the obstacles later.
 
 
     sum += abs(buffer.get(i)); //adds the absolute values of the buffer together
@@ -94,7 +90,7 @@ void draw()
     obstacles.add(a); //Create and add a new obstacle
   }
 
-  //Call Player
+  //Call Player functions
   player1.update();
   player1.render();
 
@@ -109,14 +105,14 @@ void draw()
   {
     Bullet b = bullets.get(i);
     b.render();
-    b.move();
+    b.move(); //Same format as the obstacles calls
   }
 }
 
 
 void keyPressed()
 {
-  keys[keyCode] = true;
+  keys[keyCode] = true; //For the checkKey function
   if (keyCode == 'P') //Used for pausing/playing
   {
     if (player.isPlaying()) //if you press the key and it is playing, pause
@@ -133,5 +129,5 @@ void keyPressed()
 
 void keyReleased()
 {
-  keys[keyCode] = false;
+  keys[keyCode] = false; //For the checkKeyfunction
 }
