@@ -5,7 +5,7 @@ class Obstacles
   float itemY; //The X and Y coords of the obstacle -S-
   
   float itemSize = 50; //The default size of the object
-  float itemSpeed = 2; //The rate at which the object moves across the screen
+  float itemSpeed = 1.7; //The rate at which the object moves across the screen
   
   boolean bonk = false; //whether the object is colliding with the player -S-
   
@@ -56,6 +56,7 @@ class Obstacles
       
       if(dist(itemX, itemY, b.x, b.y) < itemSize/2) //If you're close enough to touch...
       {
+        score += 100; //Increment the score
         bullets.remove(b);
         obstacles.remove(this); //Remove the bullet and obstacle
       }

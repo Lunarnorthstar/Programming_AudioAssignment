@@ -55,7 +55,7 @@ class Player
   }
 
   //Shoot Variables
-  float fireRate = 0.6;
+  float fireRate = 0.3;
   float timePass; //-S-
 
   void shoot()

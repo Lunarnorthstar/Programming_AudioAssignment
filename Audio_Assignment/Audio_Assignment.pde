@@ -14,17 +14,13 @@ AudioInput ai;
 //Variables; -S- Denotes a "set" variable, don't change the value.
 float lerpedAverage = 0; //Lerps the average (smoother movement) -S-
 float[] lerpedBuffer; //Lerped buffer (smoother visual) -S-
-int health = 3; //Health of the player
-float timeSurvived; //Measures the time alive -S-
 float playerSpeed = 3; //Movement speed of the player
 float playerY, playerX; //Position of the player -S-
 float playerSize = 20; //Size of the player
+int score = 0; //The player's score -S-
 
 int maxRock = 100; //Maximum amount of obstacles on screen at once
-float itemSizeVar = 5; //The amount that each obstacle can vary in size
-
-//boolean start = false;
-boolean dead; //Whether the player is dead -S-
+float itemSizeVar = 4; //The amount that each obstacle can vary in size
 
 //Setup
 Player player1; //Make the player
@@ -68,6 +64,9 @@ void draw()
   //Setup visuals (backround color, line width, etc.
   background(0);
   strokeWeight(1);
+  
+  text("Score: ", 10, 20);
+  text(score, 50, 20); //Print the score
 
   float sum = 0; //sumvariable that resets
   float sample = 0; //Sample variable that resets
