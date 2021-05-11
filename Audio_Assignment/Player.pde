@@ -35,25 +35,22 @@ class Player
   }
   void move()
   {
-     if (keyPressed) //Player controls
-  {
-    if (keyCode == UP && playerY > playerSize)
+    if (checkKey(UP) && playerY > playerSize)
     {
       playerY -= playerSpeed;
     }
-    if (keyCode == DOWN && playerY < height - playerSize)
+    if (checkKey(DOWN) && playerY < height - playerSize)
     {
       playerY += playerSpeed;
     }
-    if (keyCode == RIGHT && playerX < width - playerSize)
+    if (checkKey(RIGHT) && playerX < width - playerSize)
     {
       playerX += playerSpeed;
     }
-    if (keyCode == LEFT && playerX > playerSize/4)
+    if (checkKey(LEFT) && playerX > playerSize/4)
     {
       playerX -= playerSpeed;
     }
-  }
   }
   
   //Shoot Variables
@@ -62,18 +59,16 @@ class Player
   
   void shoot()
   {
-     if (keyPressed) //Shoot controls
-  {
-    if(key == ' ' && timePass >= fireRate)
+
+    if(checkKey(' ') && timePass >= fireRate)
     {
       float x, y;
       x = playerX + playerSize;
-      y = playerY;
-      Bullet b = new Bullet(x, y);
+      y = playerY; //Positions of the bullet
+      Bullet b = new Bullet(x, y); //Make a new bullet
       bullets.add(b);
-      timePass = 0;
+      timePass = 0; //Reset the cooldown
     }
     
-  }
   }
 }

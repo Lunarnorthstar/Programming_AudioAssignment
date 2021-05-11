@@ -29,6 +29,8 @@ class Bullet
      //removes the offending bullet from the array
      bullets.remove(this);
      }
+     
+     
 
 
      /* life -= 1/ 60.0f;

@@ -32,6 +32,8 @@ Player player1;
 ArrayList<Obstacles> obstacles = new ArrayList<Obstacles>(); //Starts the obstacles array list
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();  //Starts the bullet array list
 
+boolean[] keys = new boolean[526]; //Input array
+
 void setup()
 {
   //Basic Setup
@@ -40,7 +42,7 @@ void setup()
   playerY = height/2;
   playerX = 100; //Properly sets the player X and Y based on the adjusted screen size
   player1 = new Player(playerX, playerY, playerSize, playerSpeed); //Creates the player
-  
+
   //Minim music Setup
   minim = new Minim(this);
   player = minim.loadFile("One Step From Eden - Cloak and Revolver Shiso's Theme.mp3", width);
@@ -50,11 +52,23 @@ void setup()
   lerpedBuffer = new float[buffer.size()];
 }
 
+
+boolean checkKey(int k)
+{
+  if (keys.length >= k)
+  {
+    return keys[k] || keys[Character.toUpperCase(k)];
+  }
+  return false;
+} //Checks for inputs
+
+
 void draw()
 {
   //Setup visuals (backround color, line width, etc.
   background(0);
-  keyPressed();
+  //keyPressed();
+  //keyReleased();
   strokeWeight(1);
 
   //Smooths buffer
@@ -65,34 +79,33 @@ void draw()
     stroke(map(i, 0, buffer.size(), 0, 255), 255, 255); //sets color
     lerpedBuffer[i] = lerp(lerpedBuffer[i], buffer.get(i), 0.1f); //lerp buffer (smooth image)
     sample = lerpedBuffer[i] * itemSizeVar; //new variable taking the value from the buffer 
-    
-    
+
+
     sum += abs(buffer.get(i)); //adds the absolute values of the buffer together
   }
 
   float average = sum / buffer.size(); //takes the average of the buffer
   print(average); //Prints the average (for debug purposes)
-  
-  
-  if(average > 0.23) //If the average is high enough...
+
+
+  if (average > 0.23) //If the average is high enough...
   {
     Obstacles a = new Obstacles();
     obstacles.add(a); //Create and add a new obstacle
   }
-  
+
   //Call Player
   player1.update();
   player1.render();
-  
-  for(int i = 0; i < obstacles.size(); i++)
+
+  for (int i = 0; i < obstacles.size(); i++)
   {
     Obstacles a = obstacles.get(i);
     a.update(); //Call all the obstacles
     a.render(sample); //Draw the obstacles, using the sample variable to adjust size
-    
   }
   //Call Bullets
-  for(int i = 0; i < bullets.size(); i++)
+  for (int i = 0; i < bullets.size(); i++)
   {
     Bullet b = bullets.get(i);
     b.render();
@@ -100,8 +113,10 @@ void draw()
   }
 }
 
+
 void keyPressed()
 {
+  keys[keyCode] = true;
   if (keyCode == 'P') //Used for pausing/playing
   {
     if (player.isPlaying()) //if you press the key and it is playing, pause
@@ -113,4 +128,10 @@ void keyPressed()
       player.play();
     }
   }
+}
+
+
+void keyReleased()
+{
+  keys[keyCode] = false;
 }

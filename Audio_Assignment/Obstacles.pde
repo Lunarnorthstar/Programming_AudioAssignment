@@ -32,10 +32,22 @@ class Obstacles
     {
      obstacles.remove(this); //If you're off the screen, go away
     }
-    
+    checkCollision(); 
   }
   
-  
+  void checkCollision()
+  {
+    for(int i = 0; i < bullets.size(); i++)//For each bullet...
+    {
+      Bullet b = bullets.get(i); //Get the bullet to use
+      
+      if(dist(itemX, itemY, b.x, b.y) < itemSize/2)
+      {
+        bullets.remove(b);
+        obstacles.remove(this); //Remove the bullet and obstacle
+      }
+    }
+  }
   
   
   
