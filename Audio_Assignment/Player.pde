@@ -16,12 +16,20 @@ class Player
   
   void render()
   {
+    if(timePass >= fireRate)
+    {
     fill(255);
+    }
+    else
+    {
+      noFill();
+    }
     stroke(255);
     triangle(playerX, playerY + playerSize, playerX, playerY - playerSize, playerX + playerSize, playerY); //Draw the player
   }
   void update()
   {
+   timePass += 1 / 60.0f;
    move();
    shoot();
   }
@@ -49,15 +57,14 @@ class Player
   }
   
   //Shoot Variables
-  int fireRate = 5;
+  float fireRate = 0.6;
   float timePass;
-  float toPass = 1/ (float) fireRate;
   
   void shoot()
   {
      if (keyPressed) //Shoot controls
   {
-    if(key == ' ' && timePass >= toPass)
+    if(key == ' ' && timePass >= fireRate)
     {
       float x, y;
       x = playerX + playerSize;
@@ -66,7 +73,7 @@ class Player
       bullets.add(b);
       timePass = 0;
     }
-    timePass += 1 / 60.0f;
+    
   }
   }
 }
